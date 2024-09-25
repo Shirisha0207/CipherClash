@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mental Health Support</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .chat-section {
+            margin-bottom: 40px;
+        }
+
+        #chat-box {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #messages {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            font-size: 1rem;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #e0ffe0;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+        }
+
+        .user-input {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        #send-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send-btn:hover {
+            background-color: #45a049;
+        }
+
+        .analysis-section {
+            margin-top: 30px;
+        }
+
+        .analysis-section h3 {
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        #analysis-box {
+            padding: 20px;
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        #suggestions-list {
+            list-style-type: none;
+        }
+
+        #suggestions-list li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Mental Health Support</h1>
+            <p>Talk to our AI about how you're feeling today.</p>
+        </header>
+
+        <section class="chat-section">
+            <div id="chat-box">
+                <div id="messages"></div>
+            </div>
+
+            <div class="user-input">
+                <textarea id="user-input" placeholder="How are you feeling today?" rows="3"></textarea>
+                <button id="send-btn">Send</button>
+            </div>
+        </section>
+
+        <section class="analysis-section">
+            <h3>Analysis and Suggestions</h3>
+            <div id="analysis-box">
+                <p id="analysis-output">AI will analyze your input and provide suggestions here.</p>
+            </div>
+            <ul id="suggestions-list">
+                <!-- AI-based suggestions will be dynamically added here -->
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('send-btn').addEventListener('click', function() {
+            let userInput = document.getElementById('user-input').value;
+
+            if (userInput.trim() === "") {
+                return;
+            }
+
+            addMessage(userInput, 'user');
+            document.getElementById('user-input').value = '';
+
+            // Simulating AI processing and response
+            setTimeout(function() {
+                let aiResponse = generateAIResponse(userInput);
+                addMessage(aiResponse, 'bot');
+                analyzeInput(userInput);
+            }, 1000);
+        });
+
+        function addMessage(message, sender) {
+            let messageBox = document.createElement('div');
+            messageBox.classList.add('message', ${sender}-message);
+            messageBox.innerText = message;
+
+            document.getElementById('messages').appendChild(messageBox);
+            document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+        }
+
+        function generateAIResponse(input) {
+            // Here, you could add an actual AI model for response.
+            // For now, we're just providing a simulated response.
+            return "I'm here to listen. Can you tell me more about how you're feeling?";
+        }
+
+        function analyzeInput(input) {
+            let analysisBox = document.getElementById('analysis-output');
+            analysisBox.innerText = "Analyzing your input...";
+
+            // Simulated analysis based on the user's input
+            setTimeout(function() {
+                let analysis = It sounds like you're feeling ${detectEmotion(input)}.;
+                analysisBox.innerText = analysis;
+                addSuggestions(["Take deep breaths", "Reach out to a loved one", "Try mindfulness meditation"]);
+            }, 1500);
+        }
+
+        function detectEmotion(input) {
+            // Placeholder function that could analyze sentiment/emotion
+            if (input.toLowerCase().includes("sad") || input.toLowerCase().includes("down")) {
+                return "sad";
+            } else if (input.toLowerCase().includes("happy") || input.toLowerCase().includes("good")) {
+                return "happy";
+            } else {
+                return "neutral";
+            }
+        }
+
+        function addSuggestions(suggestions) {
+            let suggestionList = document.getElementById('suggestions-list');
+            suggestionList.innerHTML = '';  // Clear existing suggestions
+
+            suggestions.forEach(function(suggestion) {
+                let li = document.createElement('li');
+                li.innerText = suggestion;
+                suggestionList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
